@@ -1,0 +1,47 @@
+<div th:replace="compartilhado/top"></div>
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Editar usuário</h1>
+    <p class="mb-4">Edição de usuários</p>
+    <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#edicaoModal">
+        Editar
+    </button>
+    <a th:href="@{/administradores}" class="btn btn-outline-secondary" style="margin-left: 5px;">
+        Voltar
+    </a>
+    <div class="modal fade" id="edicaoModal" tabindex="-1" role="dialog" aria-labelledby="edicaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 153%; right: 20%; margin-top: 9%;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edicaoModalLabel">Editar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{'/administradores/' + ${administrador.id} + '/atualizar'}" method="post">
+                        <input type="hidden" name="_method" value="put" />
+                        <div class="form-row" style="flex-direction: column;">
+                            <div class="col-md-4 mb-3">
+                                <label for="nome">Seu nome</label>
+                                <input type="text" class="form-control" th:value="${administrador.nome}" required id="nome" name="nome" placeholder="Digite seu nome" style="width: 170%;">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" th:value="${administrador.email}" required id="email" name="email" placeholder="Digite seu e-mail" aria-describedby="inputGroupPrepend3" style="width: 170%;">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="senha">Senha</label>
+                                <input type="text" class="form-control" th:value="${administrador.senha}" required id="senha" name="senha" placeholder="Digite sua senha" style="width: 230%;">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success">Salvar</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" style="margin-left: 5px;">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="compartilhado/baixo"></div>

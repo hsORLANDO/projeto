@@ -1,0 +1,67 @@
+<div th:replace="compartilhado/top"></div>
+    <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Seja bem-vindo - <span th:text="${nome}"></span></h1>
+            <p id="localizacao"></p>
+        </div>
+
+        <!-- Adicione um botão para capturar a imagem da câmera -->
+        <button onclick="capturarImagem()">Capturar Imagem</button>
+        <img id="imagemCapturada" style="display: none;">
+
+    </div>
+    <div th:replace="compartilhado/baixo"></div>
+
+    <script>
+        // Verifica se o navegador suporta geolocalização
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // Obtém as coordenadas de latitude e longitude
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                // Atualiza o conteúdo do elemento com id "localizacao"
+                document.getElementById("localizacao").innerHTML = "Latitude: " + latitude + ", Longitude: " + longitude;
+            });
+        } else {
+            // Caso o navegador não suporte geolocalização
+            document.getElementById("localizacao").innerHTML = "Geolocalização não suportada pelo seu navegador.";
+        }
+
+        // Função para capturar a imagem da câmera
+        function capturarImagem() {
+            var video = document.createElement("video");
+            var imagemCapturada = document.getElementById("imagemCapturada");
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function (error) {
+                    console.error("Erro ao acessar a câmera: " + error);
+                });
+
+            video.addEventListener("canplay", function () {
+                // Ajusta o tamanho do elemento de imagem
+                imagemCapturada.width = video.videoWidth;
+                imagemCapturada.height = video.videoHeight;
+
+                // Exibe o elemento de imagem e oculta o vídeo
+                video.style.display = "none";
+                imagemCapturada.style.display = "block";
+
+                // Captura uma imagem do vídeo
+                var contexto = imagemCapturada.getContext("2d");
+                contexto.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+                // Para a reprodução do vídeo e libera os recursos
+                video.srcObject.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+
+                // Remove o evento 'canplay' para evitar múltiplas capturas
+                video.removeEventListener("canplay", arguments.callee);
+            });
+        }
+    </script>

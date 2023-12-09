@@ -7,7 +7,7 @@
 
         <!-- Adicione um botão para capturar a imagem da câmera -->
         <button onclick="capturarImagem()">Capturar Imagem</button>
-        <img id="imagemCapturada" style="display: none;">
+        <canvas id="canvasCapturado" style="display: none;"></canvas>
 
     </div>
     <div th:replace="compartilhado/baixo"></div>
@@ -31,7 +31,7 @@
         // Função para capturar a imagem da câmera
         function capturarImagem() {
             var video = document.createElement("video");
-            var imagemCapturada = document.getElementById("imagemCapturada");
+            var canvasCapturado = document.getElementById("canvasCapturado");
 
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(function (stream) {
@@ -43,16 +43,16 @@
                 });
 
             video.addEventListener("canplay", function () {
-                // Ajusta o tamanho do elemento de imagem
-                imagemCapturada.width = video.videoWidth;
-                imagemCapturada.height = video.videoHeight;
+                // Ajusta o tamanho do elemento canvas
+                canvasCapturado.width = video.videoWidth;
+                canvasCapturado.height = video.videoHeight;
 
-                // Exibe o elemento de imagem e oculta o vídeo
+                // Exibe o elemento canvas e oculta o vídeo
                 video.style.display = "none";
-                imagemCapturada.style.display = "block";
+                canvasCapturado.style.display = "block";
 
                 // Captura uma imagem do vídeo
-                var contexto = imagemCapturada.getContext("2d");
+                var contexto = canvasCapturado.getContext("2d");
                 contexto.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
                 // Para a reprodução do vídeo e libera os recursos

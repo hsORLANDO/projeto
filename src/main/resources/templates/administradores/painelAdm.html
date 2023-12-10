@@ -1,7 +1,7 @@
 <div th:replace="compartilhado/top"></div>
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Usuários</h1>
-    <p class="mb-4">Olhando todos os usuários cadastrados.</p>
+    <p style="color: white;" class="mb-4">Olhando todos os usuários cadastrados.</p>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;" >Lista de Usuários</h6>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                    <form th:action="@{'/administradores/' + ${administrador.id}}" method="post">
+                    <form th:action="@{'/administradores/' + ${administrador.id}}" method="POST">
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" class="btn btn-outline-danger">Confirmar Exclusão</button>
                     </form>

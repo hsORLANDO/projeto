@@ -55,7 +55,7 @@ public class administradorController {
         return "redirect:/administradores";
     }
     
-    @DeleteMapping("/administradores/{id}")
+    @PostMapping("/administradores/{id}")
     public String excluirAdministrador(@PathVariable int id) {
         administradorService.excluirAdministrador(id);
         return "redirect:/administradores";
@@ -73,7 +73,7 @@ public class administradorController {
         return "/administradores/editar";
     }
     
-    @PutMapping("/administradores/{id}/atualizar")
+    @PostMapping("/administradores/{id}/atualizar")
     public String atualizarAdministrador(@PathVariable int id, @ModelAttribute("administrador") Administrador administrador) {
         administradorService.atualizarAdministrador(administrador);
         return "redirect:/administradores";
